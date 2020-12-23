@@ -1,0 +1,22 @@
+{
+  "name": "bulkactions",
+  "version": "1.0.0",
+  "description": "Go throught Tophatter orders and it refund them if certain criteria are meant ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Tophatter",
+    "Orders",
+    "Bulk",
+    "Automation"
+  ],
+  "author": "Wadson Vaval",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1",
+    "puppeteer": "^5.5.0"
+  }
+}
