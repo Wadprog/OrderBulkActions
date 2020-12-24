@@ -6,7 +6,10 @@
 const helper = {}
 
 //Constants
-helper.constants = Object.freeze({ BASE_URL: '' })
+helper.constants = Object.freeze({
+  BASE_URL: '',
+  LOGIN_PAGE: 'https://tophatter.com/',
+})
 
 // Helper functions
 helper.allActionsMatch = () => {

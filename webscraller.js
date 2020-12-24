@@ -4,10 +4,13 @@
  */
 
 // Dependencies
-
+let puppeteer = require('puppeteer')
 // Custom dependencies
+const config = require('./config')
+const credentials = require('./.env')
 const helper = require('./helper')
-let { allActionsMatch } = helper
+
+let { allActionsMatch, constants } = helper
 
 // The main Object and the one to return from this module.
 const scrawler = {
@@ -15,10 +18,24 @@ const scrawler = {
   page: null,
 }
 
-scrawler.init = () => {}
-scrawler.login = () => {
-  console.log('Sanity checking')
+scrawler.init = async () => {
+  if (scrawler.browser == null)
+    scrawler.browser = await puppeteer.launch(config.browser)
+  if (scrawler.page == null) scrawler.page = await scrawler.browser.newPage()
 }
+scrawler.login = async () => {
+  const { LOGIN_PAGE } = constants
+  await scrawler.init()
+  await scrawler.page.goto(LOGIN_PAGE)
+  await scrawler.page.waitForSelector('.btn-google')
+  await scrawler.page.click('.btn-google')
+  await scrawler.page.waitForNavigation()
+  let pages = await scrawler.browser.pages()
+  console.log({pages})
+  //pages.forEach((page) => console.log({ url: page.url }))
+  //await lastPage.type('#identifierId', 'hey')
+}
+
 scrawler.goToPage = async (link) => {
   if (!scrawler.loggedIn) {
     await scrawler.login()
@@ -69,6 +86,9 @@ scrawler.actionOnPage = async (link, actions) => {
 }
 
 async function test() {
-    
+  console.log('Initializing')
+  await scrawler.login()
+  console.log('set up ')
 }
+test()
 module.exports = scrawler
